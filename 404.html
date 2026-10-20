@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QuantMoon</title>
+    <meta name="description" content="QuantMoon. Coming soon." />
+    <meta name="theme-color" content="#191919" />
+    <meta property="og:title" content="QuantMoon" />
+    <meta property="og:description" content="Coming soon." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://quantmoon.com/" />
+    <meta property="og:image" content="https://quantmoon.com/logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="QuantMoon" />
+    <meta name="twitter:description" content="Coming soon." />
+    <meta name="twitter:image" content="https://quantmoon.com/logo.png" />
+    <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="canonical" href="https://quantmoon.com/" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #191919;
+        --ink: rgba(255, 255, 255, 0.72);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--bg);
+      }
+
+      body {
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        font-family: "Avenir Next", Avenir, "Century Gothic", Futura, "Trebuchet MS", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      main {
+        width: min(880px, calc(100% - 2.5rem));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(2.25rem, 6vh, 3.5rem);
+        padding: 2.5rem 0 3rem;
+      }
+
+      h1 {
+        margin: 0;
+        width: 100%;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      p {
+        margin: 0;
+        color: var(--ink);
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.46em;
+        text-indent: 0.46em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      @media (max-width: 520px) {
+        p {
+          font-size: 0.68rem;
+          letter-spacing: 0.32em;
+          text-indent: 0.32em;
+        }
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        h1,
+        p {
+          animation: rise 1.15s ease both;
+        }
+
+        p {
+          animation-delay: 0.18s;
+        }
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>
+        <img src="logo.png" alt="QuantMoon" width="828" height="124" />
+      </h1>
+      <p>Coming soon</p>
+    </main>
+  </body>
+</html>
