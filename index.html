@@ -6,15 +6,16 @@
     <title>QuantMoon</title>
     <meta name="description" content="QuantMoon. Coming soon." />
     <meta name="theme-color" content="#191919" />
+    <meta name="robots" content="max-image-preview:none" />
+    <meta name="googlebot" content="noimageindex" />
+    <meta name="referrer" content="no-referrer" />
     <meta property="og:title" content="QuantMoon" />
     <meta property="og:description" content="Coming soon." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://quantmoon.com/" />
-    <meta property="og:image" content="https://quantmoon.com/logo.png" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="QuantMoon" />
     <meta name="twitter:description" content="Coming soon." />
-    <meta name="twitter:image" content="https://quantmoon.com/logo.png" />
     <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <link rel="canonical" href="https://quantmoon.com/" />
@@ -34,6 +35,9 @@
         margin: 0;
         min-height: 100%;
         background: var(--bg);
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
       }
 
       body {
@@ -58,24 +62,30 @@
         width: 100%;
       }
 
-      img {
+      .mark {
+        position: relative;
+        width: 100%;
+      }
+
+      .mark img {
         display: block;
         width: 100%;
         height: auto;
+        aspect-ratio: 6624 / 992;
+        pointer-events: none;
+        -webkit-user-drag: none;
+        user-select: none;
+        -webkit-touch-callout: none;
       }
 
-      .still {
-        display: none;
+      .mark img:not([src]) {
+        visibility: hidden;
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .motion {
-          display: none;
-        }
-
-        .still {
-          display: block;
-        }
+      .shield {
+        position: absolute;
+        inset: 0;
+        background: transparent;
       }
 
       p {
@@ -98,13 +108,19 @@
       }
 
       @media (prefers-reduced-motion: no-preference) {
-        h1,
+        .mark,
         p {
           animation: rise 1.15s ease both;
         }
 
         p {
           animation-delay: 0.18s;
+        }
+      }
+
+      @media print {
+        .mark {
+          visibility: hidden;
         }
       }
 
@@ -123,11 +139,44 @@
   </head>
   <body>
     <main>
-      <h1>
-        <img class="motion" src="quantmoon-loading.gif" alt="QuantMoon" width="6624" height="992" />
-        <img class="still" src="logo.png" alt="" width="828" height="124" />
+      <h1 class="mark">
+        <img id="mark" alt="QuantMoon" width="6624" height="992" draggable="false" />
+        <span class="shield" aria-hidden="true"></span>
       </h1>
       <p>Coming soon</p>
     </main>
+    <script>
+      (function () {
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var file = reduce ? "mark-still.dat" : "mark.dat";
+        var type = reduce ? "image/png" : "image/gif";
+        var key = new Uint8Array([23, 124, 177, 203, 224, 94, 87, 217, 23, 20, 247, 76, 181, 148, 0, 84]);
+        var img = document.getElementById("mark");
+        var mark = document.querySelector(".mark");
+
+        function block(event) {
+          event.preventDefault();
+        }
+
+        mark.addEventListener("contextmenu", block);
+        mark.addEventListener("dragstart", block);
+        mark.addEventListener("copy", block);
+        document.addEventListener("dragstart", block);
+
+        fetch(file)
+          .then(function (response) {
+            if (!response.ok) throw new Error("missing");
+            return response.arrayBuffer();
+          })
+          .then(function (buffer) {
+            var bytes = new Uint8Array(buffer);
+            for (var i = 0; i < bytes.length; i++) bytes[i] ^= key[i % key.length];
+            img.src = URL.createObjectURL(new Blob([bytes], { type: type }));
+          })
+          .catch(function () {
+            img.alt = "QuantMoon";
+          });
+      })();
+    </script>
   </body>
 </html>
